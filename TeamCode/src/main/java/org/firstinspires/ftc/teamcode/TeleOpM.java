@@ -33,6 +33,8 @@ public class TeleOpM extends LinearOpMode {
             double x = gamepad1.left_stick_x; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
 
+
+
             // Denominator is the largest motor power (absolute value) or 1
             // This ensures all the powers maintain the same ratio,
             // but only if at least one is out of the range [-1, 1]
@@ -42,10 +44,26 @@ public class TeleOpM extends LinearOpMode {
             double frontRightPower = (y - x - rx) / denominator;
             double backRightPower = (y + x - rx) / denominator;
 
+            double speedMultiplier =1.0;
+
+            if (gamepad1.left_bumper) {
+                speedMultiplier = 0.5;
+                frontLeftPower *= speedMultiplier;
+                frontRightPower *= speedMultiplier;
+                backLeftPower *= speedMultiplier;
+                backRightPower *= speedMultiplier;
+            }
             frontLeftMotor.setPower(frontLeftPower);
             backLeftMotor.setPower(backLeftPower);
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
+
+
+
+
+
         }
+
     }
 }
+
