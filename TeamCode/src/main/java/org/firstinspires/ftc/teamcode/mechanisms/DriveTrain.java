@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.mechanisms;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class DriveTrain {
     private DcMotorEx fL, bL, fR, bR;
+    private double speedMod; //used as speed coefficient (e.g. 0.8 would be 80% speed, and so on
     public void init(HardwareMap hw) {
         fL = hw.get(DcMotorEx.class, "frontLeft");
         bL = hw.get(DcMotorEx.class, "backLeft");
@@ -18,6 +20,8 @@ public class DriveTrain {
         fR.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.REVERSE);
 
+        speedMod = 1;
+
 
     }
 
@@ -26,7 +30,7 @@ public class DriveTrain {
         double x = -g1.left_stick_x; // Counteract imperfect strafing
         double rx = -g1.right_stick_x;
 
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1) / speedMod;
         double frontLeftPower = (y + x + rx) / denominator;
         double backLeftPower = (y - x + rx) / denominator;
         double frontRightPower = (y - x - rx) / denominator;
@@ -36,5 +40,18 @@ public class DriveTrain {
         bL.setPower(backLeftPower);
         fR.setPower(frontRightPower);
         bR.setPower(backRightPower);
+
+        if (g1.dpadDownWasPressed()) {
+            speedMod = Math.max(0, speedMod - 0.2);
+
+        }
+
+        if (g1.dpadUpWasPressed()) {
+            speedMod = Math.min(1, speedMod + 0.2);
+        }
+    }
+
+    public double getSpeed() {
+        return speedMod;
     }
 }
