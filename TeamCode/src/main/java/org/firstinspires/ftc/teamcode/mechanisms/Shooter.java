@@ -9,25 +9,26 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Shooter {
     private DcMotor fly;
     private CRServo lFeed, rFeed;
+    private boolean wasPressed;
     private double speedMod;
 
     public void init(HardwareMap hw) {
         fly = hw.get(DcMotorEx.class, "flyWheel");
         lFeed = hw.get(CRServo.class, "leftFeeder");
         rFeed = hw.get(CRServo.class, "rightFeeder");
-        speedMod = 0.2;
+        speedMod = 0.6;
     }
 
     public void shoot(Gamepad g2) {
-        if (g2.right_bumper) {
+        if (g2.right_trigger >= 0.8) { //run flywheel
             fly.setPower(-speedMod);
-        } else if (g2.left_bumper) {
+        } else if (g2.left_trigger >= 0.8) {
             fly.setPower(speedMod);
         } else {
             fly.setPower(0);
         }
 
-        if (g2.x) {
+        if (g2.x) { //feed ball into the shooter
             lFeed.setPower(1);
             rFeed.setPower(-1);
         } else if (g2.b) {
@@ -38,11 +39,14 @@ public class Shooter {
             rFeed.setPower(0);
         }
 
-            if (g2.dpadDownWasPressed()) {
-            speedMod = Math.max(0, speedMod - 0.2);
-        }
-        if (g2.dpadUpWasPressed()) {
-            speedMod = Math.min(1, speedMod + 0.2);
+        if (g2.left_bumper && !wasPressed) { //speed controls (checks last state)
+            speedMod = Math.max(0, speedMod - 0.1);
+            wasPressed = true;
+        } else if (g2.right_bumper && !wasPressed) {
+            speedMod = Math.min(1, speedMod + 0.1);
+            wasPressed = true;
+        } else if (!g2.left_bumper && !g2.right_bumper){
+            wasPressed = false;
         }
     }
 
