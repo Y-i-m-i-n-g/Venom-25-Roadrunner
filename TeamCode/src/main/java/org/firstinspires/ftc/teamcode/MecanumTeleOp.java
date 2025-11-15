@@ -26,7 +26,11 @@ public class MecanumTeleOp extends OpMode {
 
         telemetry.addLine(String.format("Drivetrain Speed: %.1f", Drive.getSpeed()));
         telemetry.addLine(String.format("Shoot Speed: %.1f", Shoot.getSpeed()));
-        telemetry.addLine("Gamepad 2: Bumpers to spin flywheel, X and B to spin servos, D pad to modify speed");
+
+        telemetry.addLine("\n\n\nControls\nDriver 1: Joysticks for Movement | Right Bumper: Increases speed by 0.2 | Left Bumper: Decreases speed by 0.2");
+        telemetry.addLine("\nDriver 2: Right Trigger: Spins flywheel forward (shoots ball) | Left Trigger: Spins flywheel backwards | X: Feeds ball into flywheel | B: Retracts ball from flywheel | Right Bumper: Increases speed by 0.2 | Left Bumper: Decreases speed by 0.2");
+
         telemetry.update();
+
     }
 }

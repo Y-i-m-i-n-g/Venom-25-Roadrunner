@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class DriveTrain {
     private DcMotorEx fL, bL, fR, bR;
+    private boolean wasPressed;
     private double speedMod; //used as speed coefficient (e.g. 0.8 would be 80% speed, and so on
     public void init(HardwareMap hw) {
         fL = hw.get(DcMotorEx.class, "frontLeft");
@@ -21,6 +22,8 @@ public class DriveTrain {
         bR.setDirection(DcMotor.Direction.REVERSE);
 
         speedMod = 1;
+
+        wasPressed = false;
 
 
     }
@@ -41,17 +44,23 @@ public class DriveTrain {
         fR.setPower(frontRightPower);
         bR.setPower(backRightPower);
 
-        if (g1.dpadDownWasPressed()) {
+        if (g1.left_bumper && !wasPressed) {
             speedMod = Math.max(0, speedMod - 0.2);
-
-        }
-
-        if (g1.dpadUpWasPressed()) {
+            wasPressed = true;
+        } else if (g1.right_bumper && !wasPressed) {
             speedMod = Math.min(1, speedMod + 0.2);
+            wasPressed = true;
+        }
+        if (!g1.left_bumper && !g1.right_bumper){
+            wasPressed = false;
         }
     }
 
     public double getSpeed() {
         return speedMod;
+    }
+
+    public boolean pressed() {
+        return wasPressed;
     }
 }
