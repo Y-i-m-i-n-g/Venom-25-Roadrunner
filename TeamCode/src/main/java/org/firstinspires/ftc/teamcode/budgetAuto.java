@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Config
-@Autonomous(name = "budgetAuto", group = "autos")
+@Autonomous(name = "USE THIS AUTO", group = "AUTO")
 public class budgetAuto extends LinearOpMode{
 
     private DcMotor frontRightMotor;
@@ -21,6 +21,9 @@ public class budgetAuto extends LinearOpMode{
         backRightMotor = hardwareMap.get(DcMotor.class, "backRight");
         backLeftMotor = hardwareMap.get(DcMotor.class, "backLeft");
 
+        frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotor.Direction.REVERSE);
+
         frontRightMotor.setPower(0);
         frontLeftMotor.setPower(0);
         backLeftMotor.setPower(0);
@@ -29,17 +32,17 @@ public class budgetAuto extends LinearOpMode{
         waitForStart();
         if (isStopRequested()) return;
 
-        double time = System.nanoTime() / 1E9;
+//        double time = System.nanoTime() / 1E9;
+//
+//        while (time < 2){
 
-        while (time < 2){
-
-            frontRightMotor.setPower(.25);
-            frontLeftMotor.setPower(.25);
-            backRightMotor.setPower(.25);
-            backLeftMotor.setPower(.25);
-            time = System.nanoTime() / 1E9;
-        }
-
+        frontRightMotor.setPower(.4);
+        frontLeftMotor.setPower(.4);
+        backRightMotor.setPower(.4);
+        backLeftMotor.setPower(.4);
+//            time = System.nanoTime() / 1E9;
+//        }
+        sleep(2000);
         frontRightMotor.setPower(0);
         frontLeftMotor.setPower(0);
         backRightMotor.setPower(0);

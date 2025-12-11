@@ -11,12 +11,12 @@ public class Shooter {
     private CRServo lFeed, rFeed;
     private boolean wasPressed;
     private double speedMod;
-
     public void init(HardwareMap hw) {
         fly = hw.get(DcMotorEx.class, "flyWheel");
+        fly.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lFeed = hw.get(CRServo.class, "leftFeeder");
         rFeed = hw.get(CRServo.class, "rightFeeder");
-        speedMod = 0.6;
+        speedMod = 0.65;
     }
 
     public void shoot(Gamepad g2) {
@@ -40,10 +40,10 @@ public class Shooter {
         }
 
         if (g2.left_bumper && !wasPressed) { //speed controls (checks last state)
-            speedMod = Math.max(0, speedMod - 0.1);
+            speedMod = Math.max(0, speedMod - 0.05);
             wasPressed = true;
         } else if (g2.right_bumper && !wasPressed) {
-            speedMod = Math.min(1, speedMod + 0.1);
+            speedMod = Math.min(1, speedMod + 0.05);
             wasPressed = true;
         } else if (!g2.left_bumper && !g2.right_bumper){
             wasPressed = false;
