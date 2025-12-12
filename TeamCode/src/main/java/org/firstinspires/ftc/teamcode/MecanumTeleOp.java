@@ -22,7 +22,7 @@ public class MecanumTeleOp extends OpMode {
     @Override
     public void loop() {
         Drive.mecanumDrive(gamepad1, gamepad2);
-        Shoot.shoot(gamepad2);
+        //Shoot.shoot(gamepad2);
 
         telemetry.addLine(String.format("Drivetrain Speed: %.2f", Drive.getSpeed()));
         telemetry.addLine(String.format("Shoot Speed: %.2f", Shoot.getSpeed()));
