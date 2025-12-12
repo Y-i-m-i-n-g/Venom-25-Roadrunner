@@ -5,28 +5,27 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-@TeleOp(name = "INTAKETEST")
+@TeleOp(name = "FLYWHEELTEST")
 
-public class intakeTest extends OpMode {
+public class flywheelTest extends OpMode {
 
     private double speedMod;
-    private DcMotor intake;
+    private DcMotor fly;
     private boolean wasPressed;
 
     public void init() {
-        intake = hardwareMap.get(DcMotorEx.class, "intake");
-
+        fly = hardwareMap.get(DcMotorEx.class, "fly");
         speedMod = 1;
         wasPressed = false;
     }
 
     public void loop() {
         if (gamepad1.right_trigger >= 0.8) { //run flywheel
-            intake.setPower(-speedMod);
+            fly.setPower(-speedMod);
         } else if (gamepad1.left_trigger >= 0.8) {
-            intake.setPower(speedMod);
+            fly.setPower(speedMod);
         } else {
-            intake.setPower(0);
+            fly.setPower(0);
         }
 
         if (gamepad1.left_bumper && !wasPressed) { //speed controls (checks last state)
@@ -39,7 +38,7 @@ public class intakeTest extends OpMode {
             wasPressed = false;
         }
 
-        telemetry.addLine("INTAKE SPEED: " + speedMod);
+        telemetry.addLine("FLYWHEEL SPEED: " + speedMod);
         telemetry.update();
 
     }
