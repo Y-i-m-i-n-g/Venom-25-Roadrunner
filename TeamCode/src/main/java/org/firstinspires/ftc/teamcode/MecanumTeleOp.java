@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
+import android.annotation.SuppressLint;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -19,6 +21,7 @@ public class MecanumTeleOp extends OpMode {
         Shoot.init(hardwareMap);
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void loop() {
         Drive.mecanumDrive(gamepad1, gamepad2);

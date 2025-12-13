@@ -15,6 +15,6 @@ public class shooterTest extends OpMode {
 
     public void loop() {
         shoot.velocityShoot();
-
+        shoot.velocityTransfer();
     }
 }

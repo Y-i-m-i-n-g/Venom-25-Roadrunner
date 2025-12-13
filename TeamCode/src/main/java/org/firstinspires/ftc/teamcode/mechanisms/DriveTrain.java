@@ -33,22 +33,22 @@ public class DriveTrain {
         double x = -g1.left_stick_x; // Counteract imperfect strafing
         double rx = -g1.right_stick_x;
 
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1) / speedMod;
-        double frontLeftPower = (y + x + rx) / denominator;
-        double backLeftPower = (y - x + rx) / denominator;
-        double frontRightPower = (y - x - rx) / denominator;
-        double backRightPower = (y + x - rx) / denominator;
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+        double fLPow = (y + x + rx) / denominator;
+        double bLPow = (y - x + rx) / denominator;
+        double fRPow = (y - x - rx) / denominator;
+        double bRPow = (y + x - rx) / denominator;
 
-        fL.setPower(frontLeftPower);
-        bL.setPower(backLeftPower);
-        fR.setPower(frontRightPower);
-        bR.setPower(backRightPower);
+        fL.setPower(fLPow * speedMod);
+        bL.setPower(bLPow * speedMod);
+        fR.setPower(fRPow * speedMod);
+        bR.setPower(bRPow * speedMod);
 
         if (g1.left_bumper && !wasPressed) {
-            speedMod = Math.max(0, speedMod - 0.2);
+            speedMod = Math.max(0, speedMod - 0.3);
             wasPressed = true;
         } else if (g1.right_bumper && !wasPressed) {
-            speedMod = Math.min(1, speedMod + 0.2);
+            speedMod = Math.min(1, speedMod + 0.3);
             wasPressed = true;
         }
         if (!g1.left_bumper && !g1.right_bumper){

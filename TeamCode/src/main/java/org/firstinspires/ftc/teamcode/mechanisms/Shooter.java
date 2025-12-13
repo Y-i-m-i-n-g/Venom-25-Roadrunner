@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.mechanisms;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Shooter {
     private DcMotorEx fly;
     private CRServo lFeed, rFeed;
+    private CRServo tempServo;
     private boolean wasPressed;
     private double speedMod;
 
@@ -23,6 +25,8 @@ public class Shooter {
         //hardware mapping
         fly = hw.get(DcMotorEx.class, "flyWheel");
         fly.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        tempServo = hw.get(CRServo.class, "transfer");
+        tempServo.setDirection(DcMotorSimple.Direction.FORWARD);
 
 //        lFeed = hw.get(CRServo.class, "leftFeeder");
 //        rFeed = hw.get(CRServo.class, "rightFeeder");
@@ -43,6 +47,10 @@ public class Shooter {
 
     public void velocityShoot() {
         fly.setVelocity(1);
+    }
+
+    public void velocityTransfer() {
+        tempServo.setPower(1);
     }
 
 //    public void shoot(Gamepad g2) {
