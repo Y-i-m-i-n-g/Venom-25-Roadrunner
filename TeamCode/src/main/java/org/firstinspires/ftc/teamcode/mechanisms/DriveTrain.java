@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -18,7 +19,7 @@ public class DriveTrain {
         fR = hw.get(DcMotorEx.class, "frontRight");
         bR = hw.get(DcMotorEx.class, "backRight");
 
-        fR.setDirection(DcMotor.Direction.REVERSE);
+        fL.setDirection(DcMotorSimple.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.REVERSE);
 
         speedMod = 1;
@@ -30,8 +31,8 @@ public class DriveTrain {
 
     public void mecanumDrive(Gamepad g1, Gamepad g2) {
         double y = g1.left_stick_y; // Remember, Y stick value is reversed
-        double x = -g1.left_stick_x; // Counteract imperfect strafing
-        double rx = -g1.right_stick_x;
+        double x = g1.right_stick_x; // Counteract imperfect strafing
+        double rx = g1.left_stick_x;
 
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double fLPow = (y + x + rx) / denominator;
