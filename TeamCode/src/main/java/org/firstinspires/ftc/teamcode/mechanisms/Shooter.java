@@ -9,30 +9,53 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Shooter {
+
     private DcMotorEx fly;
-    private CRServo lFeed, rFeed;
-    private CRServo tempServo;
     private boolean wasPressed;
     private double speedMod;
 
-    private double kP, kI, kD;
-    private double integralSum;
-    private double previous_error, previous_time;
-
-    private ElapsedTime timer;
     public void init(HardwareMap hw) {
-        // double[] coefficents
         //hardware mapping
-        fly = hw.get(DcMotorEx.class, "flyWheel");
+        fly = hw.get(DcMotorEx.class, "flyWheel"); //TODO: Add hood servo
         fly.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        tempServo = hw.get(CRServo.class, "transfer");
-        tempServo.setDirection(DcMotorSimple.Direction.FORWARD);
-
-//        lFeed = hw.get(CRServo.class, "leftFeeder");
-//        rFeed = hw.get(CRServo.class, "rightFeeder");
 
         //currently obsolete, used to set default speed of shooter
         speedMod = 0.65;
+    }
+
+    public void shoot(Gamepad g2) {
+        if (g2.right_trigger >= 0.8) { //run flywheel
+            fly.setPower(-speedMod); //TODO: Use setVelocity and setPIDFCoefficients or whatever
+        } else if (g2.left_trigger >= 0.8) {
+            fly.setPower(speedMod);
+        } else {
+            fly.setPower(0);
+        }
+
+        if (g2.left_bumper && !wasPressed) { //speed controls (checks last state)
+            speedMod = Math.max(0, speedMod - 0.05);
+            wasPressed = true;
+        } else if (g2.right_bumper && !wasPressed) {
+            speedMod = Math.min(1, speedMod + 0.05);
+            wasPressed = true;
+        } else if (!g2.left_bumper && !g2.right_bumper){
+            wasPressed = false;
+        }
+    }
+
+    public double getSpeed() {
+        return speedMod;
+    }
+
+
+//Obsolete PID code, left for posterity
+
+//    private ElapsedTime timer;
+
+//    private double kP, kI, kD;
+//    private double integralSum;
+//    private double previous_error, previous_time;
+
 
 //        //PID coefficents + variables
 //        kP = coefficents[0];
@@ -43,50 +66,7 @@ public class Shooter {
 //        //Timer for PID
 //        ElapsedTime timer = new ElapsedTime();
 
-    }
 
-    public void velocityShoot() {
-        fly.setVelocity(1);
-    }
-
-    public void velocityTransfer() {
-        tempServo.setPower(1);
-    }
-
-//    public void shoot(Gamepad g2) {
-//        if (g2.right_trigger >= 0.8) { //run flywheel
-//            fly.setPower(-speedMod);
-//        } else if (g2.left_trigger >= 0.8) {
-//            fly.setPower(speedMod);
-//        } else {
-//            fly.setPower(0);
-//        }
-//
-//        if (g2.x) { //feed ball into the shooter
-//            lFeed.setPower(1);
-//            rFeed.setPower(-1);
-//        } else if (g2.b) {
-//            lFeed.setPower(-1);
-//            rFeed.setPower(1);
-//        } else {
-//            lFeed.setPower(0);
-//            rFeed.setPower(0);
-//        }
-//
-//        if (g2.left_bumper && !wasPressed) { //speed controls (checks last state)
-//            speedMod = Math.max(0, speedMod - 0.05);
-//            wasPressed = true;
-//        } else if (g2.right_bumper && !wasPressed) {
-//            speedMod = Math.min(1, speedMod + 0.05);
-//            wasPressed = true;
-//        } else if (!g2.left_bumper && !g2.right_bumper){
-//            wasPressed = false;
-//        }
-//    }
-
-    public double getSpeed() {
-        return speedMod;
-    }
 
 //    public void PIDshoot (double current_error, double previous_error, double current_time, double previous_time){
 //        //double current_time = timer.seconds();
