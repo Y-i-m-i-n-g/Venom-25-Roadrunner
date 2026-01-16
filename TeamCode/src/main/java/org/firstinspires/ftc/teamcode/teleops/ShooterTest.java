@@ -22,7 +22,8 @@ public class ShooterTest extends OpMode {
     @Override
     public void loop() {
         Shoot.shoot(gamepad2);
-        telemetry.addLine(String.format("Shoot Speed: %.2f", Shoot.getSpeed()));
+        telemetry.addLine(String.format("Flywheel Speed: %.2f", Shoot.getSpeed()));
         telemetry.update();
     }
 }
+

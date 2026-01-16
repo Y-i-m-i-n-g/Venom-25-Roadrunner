@@ -15,7 +15,7 @@ public class Intake {
     }
 
     public void intake(Gamepad g2) {
-        if (g2.y) { //run flywheel
+        if (g2.y) { //run intake
             intake.setPower(0.6);
         } else if (g2.a) {
             intake.setPower(-0.6);
@@ -23,4 +23,6 @@ public class Intake {
             intake.setPower(0);
         }
     }
+
+
 }
