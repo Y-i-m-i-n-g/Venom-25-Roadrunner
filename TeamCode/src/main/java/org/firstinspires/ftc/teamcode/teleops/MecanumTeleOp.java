@@ -1,5 +1,4 @@
 package org.firstinspires.ftc.teamcode.teleops;
-
 import android.annotation.SuppressLint;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -19,7 +18,7 @@ public class MecanumTeleOp extends OpMode {
     Transfer Transfer = new Transfer();
 
     Shooter Shoot = new Shooter();
-    Turret Rotate = new Turret();
+    //Turret Rotate = new Turret(); TODO: Add turntable for next robot
 
     @Override
     public void init() {
@@ -29,7 +28,7 @@ public class MecanumTeleOp extends OpMode {
         Transfer.init(hardwareMap);
 
         Shoot.init(hardwareMap);
-        Rotate.init(hardwareMap);
+        //Rotate.init(hardwareMap);
     }
 
 
@@ -37,11 +36,11 @@ public class MecanumTeleOp extends OpMode {
     public void loop() {
         Drive.mecanumDrive(gamepad1);
 
-        Intake.intake(gamepad2);
+        telemetry.addLine(Intake.intake(gamepad2));
         Transfer.transfer(gamepad2);
 
         Shoot.shoot(gamepad2);
-        Rotate.rotate(gamepad2);
+        //Rotate.rotate(gamepad2);
 
         telemetry.addLine(String.format("Drivetrain Speed: %.2f", Drive.getSpeed()));
         telemetry.addLine(String.format("Shoot Speed: %.2f", Shoot.getSpeed()));

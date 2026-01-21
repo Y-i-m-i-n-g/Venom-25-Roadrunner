@@ -14,13 +14,16 @@ public class Intake {
         intake = hw.get(DcMotorEx.class, "intake");
     }
 
-    public void intake(Gamepad g2) {
-        if (g2.y) { //run intake
-            intake.setPower(0.6);
+    public String intake(Gamepad g2) {
+        if (g2.y) { //run intake00
+            intake.setPower(1);
+            return "a";
         } else if (g2.a) {
-            intake.setPower(-0.6);
+            intake.setPower(-1);
+            return "b";
         } else {
             intake.setPower(0);
+            return "c";
         }
     }
 

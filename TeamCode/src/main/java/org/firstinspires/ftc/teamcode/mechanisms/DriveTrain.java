@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.mechanisms;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -19,17 +18,19 @@ public class DriveTrain {
         fR = hw.get(DcMotorEx.class, "frontRight");
         bR = hw.get(DcMotorEx.class, "backRight");
 
-        fR.setDirection(DcMotorSimple.Direction.REVERSE); //TODO: check and fix these
-        bR.setDirection(DcMotor.Direction.REVERSE);
+        fL.setDirection(DcMotor.Direction.REVERSE); //TODO: check and fix these
+        bL.setDirection(DcMotor.Direction.REVERSE);
+        fR.setDirection(DcMotor.Direction.FORWARD); //TODO: check and fix these
+        bR.setDirection(DcMotor.Direction.FORWARD);
 
         speedMod = 1;
         wasPressed = false;
     }
 
     public void mecanumDrive(Gamepad g1) {
-        double y = g1.left_stick_y;
-        double x = -g1.right_stick_x;
-        double rx = -g1.left_stick_x;
+        double y = -g1.left_stick_y;
+        double x = g1.left_stick_x;
+        double rx = g1.right_stick_x;
 
         //calculating coefficients
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1) / speedMod;
