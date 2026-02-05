@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class Shooter {
 
     private DcMotorEx fly;
@@ -18,12 +20,13 @@ public class Shooter {
         //hardware mapping
         fly = hw.get(DcMotorEx.class, "flyWheel"); //TODO: Add hood servo
         fly.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fly.setDirection(DcMotor.Direction.REVERSE);
 
         //currently obsolete, used to set default speed of shooter
         speedMod = 0.65;
     }
 
-    public void shoot(Gamepad g2) {
+    public void shoot(Telemetry telemetry, Gamepad g2) {
         if (g2.right_trigger >= 0.8) { //run flywheel
             fly.setPower(-speedMod); //TODO: Use setVelocity and setPIDFCoefficients or whatever
         } else if (g2.left_trigger >= 0.8) {
@@ -41,10 +44,15 @@ public class Shooter {
         } else if (!g2.left_bumper && !g2.right_bumper){
             wasPressed = false;
         }
+
     }
 
-    public double getSpeed() {
+    public double getspeedMod() {
         return speedMod;
+    }
+
+    public double getVelocity() {
+        return fly.getVelocity();
     }
 
 

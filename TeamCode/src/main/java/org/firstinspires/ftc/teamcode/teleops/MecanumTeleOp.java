@@ -39,11 +39,11 @@ public class MecanumTeleOp extends OpMode {
         telemetry.addLine(Intake.intake(gamepad2));
         Transfer.transfer(gamepad2);
 
-        Shoot.shoot(gamepad2);
+        Shoot.shoot(telemetry, gamepad2);
         //Rotate.rotate(gamepad2);
 
         telemetry.addLine(String.format("Drivetrain Speed: %.2f", Drive.getSpeed()));
-        telemetry.addLine(String.format("Shoot Speed: %.2f", Shoot.getSpeed()));
+        telemetry.addLine(String.format("Shoot Speed: %.2f", Shoot.getspeedMod()));
 
         telemetry.update();
 
