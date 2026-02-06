@@ -25,9 +25,9 @@ public class MecanumTeleOp extends OpMode {
         Drive.init(hardwareMap);
 
         Intake.init(hardwareMap);
-        Transfer.init(hardwareMap);
+        //Transfer.init(hardwareMap);
 
-        Shoot.init(hardwareMap);
+        //Shoot.init(hardwareMap);
         //Rotate.init(hardwareMap);
     }
 
@@ -37,9 +37,9 @@ public class MecanumTeleOp extends OpMode {
         Drive.mecanumDrive(gamepad1);
 
         telemetry.addLine(Intake.intake(gamepad2));
-        Transfer.transfer(gamepad2);
+        //Transfer.transfer(gamepad2);
 
-        Shoot.shoot(telemetry, gamepad2);
+        //Shoot.shoot(telemetry, gamepad2);
         //Rotate.rotate(gamepad2);
 
         telemetry.addLine(String.format("Drivetrain Speed: %.2f", Drive.getSpeed()));
