@@ -11,9 +11,6 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
-@TeleOp(name = "Sensor: Limelight3A", group = "Sensor")
-@Disabled
-
 public class LimeLight extends OpMode {
 
     private Limelight3A camera;
@@ -33,8 +30,6 @@ public class LimeLight extends OpMode {
     @Override
     public void start(){
         camera.start();
-        telemetry.addData(">", "Robot Ready.  Press Play.");
-        telemetry.update();
     }
     @Override
     public void loop(){
